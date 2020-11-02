@@ -1,9 +1,10 @@
 var boxes = Array.from(document.getElementsByClassName('box'));
 const playText = document.getElementById('playText');
-const nulspaces=[null,null,null,null,null,null,null,null,null]
+const nulspaces=[];
+const restartBtn= document.getElementById('restartBtn')
 const O_P = "O";
 const x_P = "X";
-let currentPlayer = O_P
+let currentPlayer;
 
 console.log(boxes);
 const drawBoard=()=>{
@@ -38,6 +39,7 @@ const boxClicked = (e) => {
         e.target.innerText = currentPlayer;
         if(playerHasWon(currentPlayer)){
             playText.innerHTML = `${currentPlayer} wins!!`;
+                // restart()
         return;
         }
         currentPlayer = currentPlayer === O_P ? x_P: O_P;
@@ -48,39 +50,56 @@ const boxClicked = (e) => {
 const playerHasWon=()=>{
     if(nulspaces[0]===currentPlayer){
         if(nulspaces[1]===currentPlayer && nulspaces[2]===currentPlayer){
-            alert(`${currentPlayer} Congratulation you are the Winer`)
+            console.log(`${currentPlayer} Congratulation you are the Winer`)
             return true;
         }
         if(nulspaces[3]===currentPlayer && nulspaces[6]===currentPlayer){
-            alert(`${currentPlayer} Congratulation you are the Winer `)
+            console.log(`${currentPlayer} Congratulation you are the Winer `)
             return true;
         }
         if(nulspaces[4]===currentPlayer && nulspaces[8]===currentPlayer){
-            alert(`${currentPlayer} Congratulation you are the Winer`)
+            console.log(`${currentPlayer} Congratulation you are the Winer`)
             return true;
         }
     }
     if (nulspaces[8] === currentPlayer) {
         if (nulspaces[2] === currentPlayer && nulspaces[5] === currentPlayer) {
-          alert(`${currentPlayer} Congratulation you are the Winer`);
+          console.log(`${currentPlayer} Congratulation you are the Winer`);
           return true;
         }
         if (nulspaces[7] === currentPlayer && nulspaces[6] === currentPlayer) {
-          alert(`${currentPlayer} Congratulation you are the Winer`);
+          console.log(`${currentPlayer} Congratulation you are the Winer`);
           return true;
         }
       }
       //from middle check middle vertical and middle horizontal
       if (nulspaces[4] === currentPlayer) {
         if (nulspaces[3] === currentPlayer && nulspaces[5] === currentPlayer) {
-          alert(`${currentPlayer} Congratulation you are the Winer`);
+          console.log(`${currentPlayer} Congratulation you are the Winer`);
           return true;
         }
+        if (nulspaces[2] === currentPlayer && nulspaces[6] === currentPlayer) {
+            console.log(`${currentPlayer} Congratulation you are the Winer`);
+            return true;
+          }
         if (nulspaces[1] === currentPlayer && nulspaces[7] === currentPlayer) {
-          alert(`${currentPlayer} Congratulation you are the Winer`);
+          console.log(`${currentPlayer} Congratulation you are the Winer`);
           return true;
         }
       }
 }
-drawBoard();
 
+
+const restart = ()=>{
+    nulspaces.forEach((space,i)=>{
+        nulspaces[i]=null
+    })
+    boxes.forEach(box=>{
+        box.innerText = '';
+    })
+    playText.innerText = `Let's Play!`;
+    currentPlayer = O_P;
+}
+restartBtn.addEventListener('click',restart)
+restart();
+drawBoard();
